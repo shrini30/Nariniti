@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Financial Lessons – NariNiti</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="index.css" />
+  <style>
+    .lessons-hero {
+      background: linear-gradient(135deg, #3a8dde 0%, #1e3c72 100%);
+      color: white;
+      padding: 4rem 2rem;
+      text-align: center;
+    }
+    
+    .lessons-hero h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      font-weight: 700;
+    }
+    
+    .lessons-hero p {
+      font-size: 1.2rem;
+      max-width: 600px;
+      margin: 0 auto;
+      opacity: 0.9;
+    }
+    
+    .lessons-container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 3rem 2rem;
+    }
+    
+    .progress-bar {
+      background: #e9ecef;
+      height: 8px;
+      border-radius: 4px;
+      margin-bottom: 2rem;
+      overflow: hidden;
+    }
+    
+    .progress-fill {
+      background: linear-gradient(90deg, #3a8dde 0%, #1e3c72 100%);
+      height: 100%;
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+    
+    .lessons-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+    
+    .lesson-card {
+      background: white;
+      border-radius: 15px;
+      padding: 2rem;
+      box-shadow: 0 4px 20px rgba(58, 141, 222, 0.1);
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+    
+    .lesson-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 30px rgba(58, 141, 222, 0.2);
+      border-color: #3a8dde;
+    }
+    
+    .lesson-card.completed {
+      border-color: #28a745;
+      background: linear-gradient(135deg, #f8fff9 0%, #e8f5e8 100%);
+    }
+    
+    .lesson-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+    
+    .lesson-number {
+      background: linear-gradient(135deg, #3a8dde 0%, #1e3c72 100%);
+      color: white;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      margin-right: 1rem;
+      font-size: 1.1rem;
+    }
+    
+    .lesson-card.completed .lesson-number {
+      background: #28a745;
+    }
+    
+    .lesson-title {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #1e3c72;
+      margin: 0;
+    }
+    
+    .lesson-description {
+      color: #666;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+    
+    .lesson-details {
+      display: none;
+      background: #f8f9ff;
+      padding: 1.5rem;
+      border-radius: 10px;
+      margin-top: 1rem;
+      border-left: 4px solid #3a8dde;
+    }
+    
+    .lesson-details.active {
+      display: block;
+      animation: slideDown 0.3s ease;
+    }
+    
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .lesson-actions {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    
+    .btn-primary {
+      background: linear-gradient(90deg, #3a8dde 0%, #1e3c72 100%);
+      color: white;
+      border: none;
+      padding: 0.7rem 1.5rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(58, 141, 222, 0.3);
+    }
+    
+    .btn-secondary {
+      background: transparent;
+      color: #3a8dde;
+      border: 2px solid #3a8dde;
+      padding: 0.7rem 1.5rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+    
+    .btn-secondary:hover {
+      background: #3a8dde;
+      color: white;
+    }
+    
+    .completion-stats {
+      background: linear-gradient(135deg, #f8fff9 0%, #e8f5e8 100%);
+      padding: 2rem;
+      border-radius: 15px;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    
+    .stats-number {
+      font-size: 3rem;
+      font-weight: 700;
+      color: #28a745;
+      margin-bottom: 0.5rem;
+    }
+    
+    .stats-label {
+      color: #666;
+      font-size: 1.1rem;
+    }
+    
+    .naariniti-footer {
+      background: linear-gradient(135deg, #1e3c72 0%, #3a8dde 100%);
+      color: white;
+      padding: 2rem;
+      border-radius: 15px;
+      text-align: center;
+      margin-top: 3rem;
+    }
+    
+    .naariniti-footer h3 {
+      margin-bottom: 1rem;
+      font-size: 1.5rem;
+    }
+    
+    .naariniti-footer p {
+      opacity: 0.9;
+      font-size: 1.1rem;
+      margin: 0;
+    }
+    
+    @media (max-width: 768px) {
+      .lessons-hero h1 {
+        font-size: 2rem;
+      }
+      
+      .lessons-hero p {
+        font-size: 1rem;
+      }
+      
+      .lessons-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .lesson-actions {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="main-header">
+    <div class="container">
+      <div class="logo">NariNiti</div>
+      <nav class="main-nav">
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="index.html#vision">Vision</a></li>
+          <li><a href="index.html#services">Services</a></li>
+          <li><a href="login.html">Login</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section class="lessons-hero">
+    <h1>🎓 Bite-Sized Financial Lessons</h1>
+    <p>Simple, regional-language learning modules designed for practical life use. Master these fundamentals to build a strong financial foundation.</p>
+  </section>
+
+  <div class="lessons-container">
+    <div class="completion-stats">
+      <div class="stats-number" id="completion-count">0</div>
+      <div class="stats-label">out of 10 lessons completed</div>
+    </div>
+    
+    <div class="progress-bar">
+      <div class="progress-fill" id="progress-fill"></div>
+    </div>
+
+    <div class="lessons-grid">
+      <!-- Lesson 1 -->
+      <div class="lesson-card" data-lesson="1">
+        <div class="lesson-header">
+          <div class="lesson-number">1</div>
+          <h3 class="lesson-title">The 50-30-20 Rule</h3>
+        </div>
+        <p class="lesson-description">A simple budgeting method that divides your income into three clear categories for better money management.</p>
+        <div class="lesson-details">
+          <h4>How it works:</h4>
+          <ul>
+            <li><strong>50% for Needs:</strong> Rent, groceries, utilities, loan EMIs</li>
+            <li><strong>30% for Wants:</strong> Entertainment, dining out, shopping</li>
+            <li><strong>20% for Savings:</strong> Emergency fund, investments, debt repayment</li>
+          </ul>
+          <p><strong>Example:</strong> If you earn ₹50,000/month → ₹25,000 (needs), ₹15,000 (wants), ₹10,000 (savings)</p>
+        </div>
+        <div class="lesson-actions">
+          <button class="btn-primary" onclick="toggleLesson(1)">Learn More</button>
+          <button class="btn-secondary" onclick="markComplete(1)">Mark Complete</button>
+        </div>
+      </div>
+
+      <!-- Lesson 2 -->
+      <div class="lesson-card" data-lesson="2">
+        <div class="lesson-header">
+          <div class="lesson-number">2</div>
+          <h3 class="lesson-title">Compound Interest Magic</h3>
+        </div>
+        <p class="lesson-description">Money earns interest, and that interest earns more interest. Start saving early for exponential growth.</p>
+        <div class="lesson-details">
+          <h4>The Power of Compound Interest:</h4>
+          <p>When you invest ₹1,000 at 10% annual interest:</p>
+          <ul>
+            <li>Year 1: ₹1,100 (₹100 interest)</li>
+            <li>Year 2: ₹1,210 (₹110 interest)</li>
+            <li>Year 10: ₹2,594</li>
+            <li>Year 20: ₹6,727</li>
+          </ul>
+          <p><strong>Key:</strong> Time is your biggest asset. Start early, even with small amounts!</p>
+        </div>
+        <div class="lesson-actions">
+          <button class="btn-primary" onclick="toggleLesson(2)">Learn More</button>
+          <button class="btn-secondary" onclick="markComplete(2)">Mark Complete</button>
+        </div>
+      </div>
+
+      <!-- Lesson 3 -->
+      <div class="lesson-card" data-lesson="3">
+        <div class="lesson-header">
+          <div class="lesson-number">3</div>
+          <h3 class="lesson-title">Emergency Fund First</h3>
+        </div>
+        <p class="lesson-description">Always save 3-6 months' worth of expenses in a separate emergency fund for unexpected situations.</p>
+        <div class="lesson-details">
+          <h4>Why Emergency Fund is Critical:</h4>
+          <ul>
+            <li>Protects you from job loss or income reduction</li>
+            <li>Covers sudden medical emergencies</li>
+            <li>Prevents you from taking high-interest loans</li>
+            <li>Gives peace of mind and financial security</li>
+          </ul>
+          <p><strong>How much:</strong> If your monthly expenses are ₹30,000, save ₹90,000-₹1,80,000</p>
+          <p><strong>Where to keep:</strong> High-yield savings account or liquid funds</p>
+        </div>
+        <div class="lesson-actions">
+          <button class="btn-primary" onclick="toggleLesson(3)">Learn More</button>
+          <button class="btn-secondary" onclick="markComplete(3)">Mark Complete</button>
+        </div>
+      </div>
+
+      <!-- Lesson 4 -->
+      <div class="lesson-card" data-lesson="4">
+        <div class="lesson-header">
+          <div class="lesson-number">4</div>
+          <h3 class="lesson-title">Needs vs. Wants</h3>
+        </div>
+        <p class="lesson-description">Distinguish between things you need (essentials) vs. want (luxuries) to control impulsive spending.</p>
+        <div class="lesson-details">
+          <h4>Clear Examples:</h4>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0;">
+            <div>
+              <h5>🟢 NEEDS:</h5>
+              <ul>
+                <li>Rent/EMI</li>
+                <li>Groceries</li>
+                <li>Utilities</li>
+                <li>Transportation</li>
+                <li>Basic clothing</li>
+                <li>Health insurance</li>
+              </ul>
+            </div>
+            <div>
+              <h5>🔴 WANTS:</h5>
+              <ul>
+                <li>Designer clothes</li>
+                <li>Latest gadgets</li>
+                <li>Dining out frequently</li>
+                <li>Premium subscriptions</li>
+                <li>Luxury items</li>
+                <li>Expensive hobbies</li>
+              </ul>
+            </div>
+          </div>
+          <p><strong>Tip:</strong> Before buying, ask "Do I need this or just want it?"</p>
+        </div>
+        <div class="lesson-actions">
+          <button class="btn-primary" onclick="toggleLesson(4)">Learn More</button>
+          <button class="btn-secondary" onclick="markComplete(4)">Mark Complete</button>
+        </div>
+      </div>
+
+      <!-- Lesson 5 -->
+      <div class="lesson-card" data-lesson="5">
+        <div class="lesson-header">
+          <div class="lesson-number">5</div>
+          <h3 class="lesson-title">Pay Yourself First</h3>
+        </div>
+        <p class="lesson-description">Treat saving like a bill you must pay every month. Set aside a fixed % of income before spending anything else.</p>
+        <div class="lesson-details">
+          <h4>How to Pay Yourself First:</h4>
+          <ol>
+            <li><strong>Set up automatic transfers:</strong> Move savings to separate account immediately after salary</li>
+            <li><strong>Start with 10-20%:</strong> Even ₹2,000 from ₹20,000 salary</li>
+            <li><strong>Increase gradually:</strong> Raise percentage with pay hikes</li>
+            <li><strong>Make it non-negotiable:</strong> Treat it like rent or EMI</li>
+          </ol>
+          <p><strong>Example:</strong> Salary day → Transfer ₹5,000 to savings → Then spend the remaining ₹45,000</p>
+        </div>
+        <div class="lesson-actions">
+          <button class="btn-primary" onclick="toggleLesson(5)">Learn More</button>
+          <button class="btn-secondary" onclick="markComplete(5)">Mark Complete</button>
+        </div>
+      </div>
+
+      <!-- Lesson 6 -->
+      <div class="lesson-card" data-lesson="6">
+        <div class="lesson-header">
+          <div class="lesson-number">6</div>
+          <h3 class="lesson-title">Good Debt vs. Bad Debt</h3>
+        </div>
+        <p class="lesson-description">Understand the difference between debt that builds assets versus debt that drains your wealth.</p>
+        <div class="lesson-details">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0;">
+            <div>
+              <h5>✅ GOOD DEBT:</h5>
+              <ul>
+                <li><strong>Home Loan:</strong> Builds property asset</li>
+                <li><strong>Education Loan:</strong> Increases earning potential</li>
+                <li><strong>Business Loan:</strong> Can generate income</li>
+              </ul>
+              <p><em>Lower interest rates, tax benefits, builds wealth</em></p>
+            </div>
+            <div>
+              <h5>❌ BAD DEBT:</h5>
+              <ul>
+                <li><strong>Credit Card Debt:</strong> High interest (24-48%)</li>
+                <li><strong>Personal Loans for wants:</strong> Expensive EMIs</li>
+                <li><strong>Consumer EMIs:</strong> Phones, gadgets depreciate</li>
+              </ul>
+              <p><em>High interest rates, no asset creation</em></p>
+            </div>
+          </div>
+          <p><strong>Rule:</strong> Avoid bad debt, use good debt strategically</p>
+        </div>
+        <div class="lesson-actions">
+          <button class="btn-primary" onclick="toggleLesson(6)">Learn More</button>
+          <button class="btn-secondary" onclick="markComplete(6)">Mark Complete</button>
+        </div>
+      </div>
+
+      <!-- Lesson 7 -->
+      <div class="lesson-card" data-lesson="7">
+        <div class="lesson-header">
+          <div class="lesson-number">7</div>
+          <h3 class="lesson-title">Start Investing Early</h3>
+        </div>
+        <p class="lesson-description">You don't need a lot to start. Even ₹500/month in mutual funds via SIP can grow massively over time.</p>
+        <div class="lesson-details">
+          <h4>Simple Investment Options:</h4>
+          <ul>
+            <li><strong>SIP in Mutual Funds:</strong> Start with ₹500-1,000/month</li>
+            <li><strong>PPF:</strong> ₹500-1.5 lakh/year, 15-year lock-in</li>
+            <li><strong>ELSS:</strong> Tax-saving mutual funds</li>
+            <li><strong>Gold ETF:</strong> Digital gold investment</li>
+          </ul>
+          <p><strong>Example:</strong> ₹2,000/month SIP for 20 years at 12% returns = ₹19.8 lakhs</p>
+          <p><strong>Key:</strong> Start small, stay consistent, increase with income</p>
+        </div>
+        <div class="lesson-actions">
+          <button class="btn-primary" onclick="toggleLesson(7)">Learn More</button>
+          <button class="btn-secondary" onclick="markComplete(7)">Mark Complete</button>
+        </div>
+      </div>
+
+      <!-- Lesson 8 -->
+      <div class="lesson-card" data-lesson="8">
+        <div class="lesson-header">
+          <div class="lesson-number">8</div>
+          <h3 class="lesson-title">Know Your Credit Score</h3>
+        </div>
+        <p class="lesson-description">Your credit score affects loan approvals and interest rates. Maintain a healthy score for better financial opportunities.</p>
+        <div class="lesson-details">
+          <h4>Credit Score Ranges:</h4>
+          <ul>
+            <li><strong>750-900:</strong> Excellent (best loan rates)</li>
+            <li><strong>650-749:</strong> Good (decent rates)</li>
+            <li><strong>550-649:</strong> Fair (higher rates)</li>
+            <li><strong>Below 550:</strong> Poor (loan rejection risk)</li>
+          </ul>
+          <h4>How to Improve:</h4>
+          <ul>
+            <li>Pay all bills on time (35% of score)</li>
+            <li>Keep credit card usage under 30%</li>
+            <li>Don't close old credit cards</li>
+            <li>Check your credit report annually</li>
+            <li>Avoid multiple loan applications</li>
+          </ul>
+        </div>
+        <div class="lesson-actions">
+          <button class="btn-primary" onclick="toggleLesson(8)">Learn More</button>
+          <button class="btn-secondary" onclick="markComplete(8)">Mark Complete</button>
+        </div>
+      </div>
+
+      <!-- Lesson 9 -->
+      <div class="lesson-card" data-lesson="9">
+        <div class="lesson-header">
+          <div class="lesson-number">9</div>
+          <h3 class="lesson-title">Track Every Rupee</h3>
+        </div>
+        <p class="lesson-description">Use apps or notebooks to track daily spending. Awareness helps reduce leaks and builds mindful habits.</p>
+        <div class="lesson-details">
+          <h4>Expense Tracking Methods:</h4>
+          <ul>
+            <li><strong>Mobile Apps:</strong> Walnut, ET Money, Money View</li>
+            <li><strong>Spreadsheets:</strong> Simple Excel/Google Sheets</li>
+            <li><strong>Notebooks:</strong> Write down daily expenses</li>
+            <li><strong>Bank Statements:</strong> Review monthly spending</li>
+          </ul>
+          <h4>Categories to Track:</h4>
+          <ul>
+            <li>Food & Dining</li>
+            <li>Transportation</li>
+            <li>Entertainment</li>
+            <li>Shopping</li>
+            <li>Bills & Utilities</li>
+            <li>Miscellaneous</li>
+          </ul>
+          <p><strong>Tip:</strong> Review weekly to identify spending patterns</p>
+        </div>
+        <div class="lesson-actions">
+          <button class="btn-primary" onclick="toggleLesson(9)">Learn More</button>
+          <button class="btn-secondary" onclick="markComplete(9)">Mark Complete</button>
+        </div>
+      </div>
+
+      <!-- Lesson 10 -->
+      <div class="lesson-card" data-lesson="10">
+        <div class="lesson-header">
+          <div class="lesson-number">10</div>
+          <h3 class="lesson-title">Insurance is Protection, Not Investment</h3>
+        </div>
+        <p class="lesson-description">Term insurance covers your life; health insurance covers medical bills. Don't mix insurance with investment.</p>
+        <div class="lesson-details">
+          <h4>Types of Essential Insurance:</h4>
+          <ul>
+            <li><strong>Term Life Insurance:</strong> High coverage, low premium</li>
+            <li><strong>Health Insurance:</strong> Medical expense coverage</li>
+            <li><strong>Vehicle Insurance:</strong> Mandatory by law</li>
+          </ul>
+          <h4>Avoid These Insurance Mistakes:</h4>
+          <ul>
+            <li>❌ ULIP (Unit Linked Insurance Plans) - poor returns</li>
+            <li>❌ Endowment policies - low returns</li>
+            <li>❌ Money-back policies - inflation killer</li>
+          </ul>
+          <p><strong>Golden Rule:</strong> Term insurance for protection + Mutual funds for investment = Better returns</p>
+          <p><strong>Coverage:</strong> Life insurance = 10-12x annual income</p>
+        </div>
+        <div class="lesson-actions">
+          <button class="btn-primary" onclick="toggleLesson(10)">Learn More</button>
+          <button class="btn-secondary" onclick="markComplete(10)">Mark Complete</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="naariniti-footer">
+      <h3>🌟 NaariNiti - Your Financial Growth Companion</h3>
+      <p>Every step you take in learning these lessons is progress toward financial independence. Remember, small consistent actions lead to big transformations. You're building a stronger, more confident financial future!</p>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 NariNiti | Empowering Women | Built with ❤️</p>
+  </footer>
+
+  <script>
+    let completedLessons = JSON.parse(localStorage.getItem('completedLessons')) || [];
+    
+    // Initialize page
+    document.addEventListener('DOMContentLoaded', function() {
+      updateProgress();
+      markCompletedLessons();
+    });
+
+    function toggleLesson(lessonNumber) {
+      const card = document.querySelector(`[data-lesson="${lessonNumber}"]`);
+      const details = card.querySelector('.lesson-details');
+      const button = card.querySelector('.btn-primary');
+      
+      if (details.classList.contains('active')) {
+        details.classList.remove('active');
+        button.textContent = 'Learn More';
+      } else {
+        // Close all other lessons
+        document.querySelectorAll('.lesson-details').forEach(detail => {
+          detail.classList.remove('active');
+        });
+        document.querySelectorAll('.btn-primary').forEach(btn => {
+          btn.textContent = 'Learn More';
+        });
+        
+        // Open current lesson
+        details.classList.add('active');
+        button.textContent = 'Hide Details';
+      }
+    }
+
+    function markComplete(lessonNumber) {
+      if (!completedLessons.includes(lessonNumber)) {
+        completedLessons.push(lessonNumber);
+        localStorage.setItem('completedLessons', JSON.stringify(completedLessons));
+        
+        const card = document.querySelector(`[data-lesson="${lessonNumber}"]`);
+        card.classList.add('completed');
+        
+        // Show completion message
+        showCompletionMessage(lessonNumber);
+        
+        updateProgress();
+      }
+    }
+
+    function updateProgress() {
+      const completionCount = document.getElementById('completion-count');
+      const progressFill = document.getElementById('progress-fill');
+      
+      completionCount.textContent = completedLessons.length;
+      progressFill.style.width = (completedLessons.length / 10) * 100 + '%';
+    }
+
+    function markCompletedLessons() {
+      completedLessons.forEach(lessonNumber => {
+        const card = document.querySelector(`[data-lesson="${lessonNumber}"]`);
+        if (card) {
+          card.classList.add('completed');
+        }
+      });
+    }
+
+    function showCompletionMessage(lessonNumber) {
+      // Create a temporary success message
+      const message = document.createElement('div');
+      message.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: #28a745;
+        color: white;
+        padding: 1rem 2rem;
+        border-radius: 8px;
+        box-shadow: 0 4px 20px rgba(40, 167, 69, 0.3);
+        z-index: 1000;
+        animation: slideIn 0.3s ease;
+      `;
+      message.textContent = `✅ Lesson ${lessonNumber} completed! Great progress!`;
+      
+      document.body.appendChild(message);
+      
+      // Remove after 3 seconds
+      setTimeout(() => {
+        message.remove();
+      }, 3000);
+    }
+
+    // Add CSS animation for success message
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes slideIn {
+        from { transform: translateX(100%); opacity: 0; }
+        to { transform: translateX(0); opacity: 1; }
+      }
+    `;
+    document.head.appendChild(style);
+  </script>
+</body>
+</html>
