@@ -30,7 +30,21 @@ db.run(`CREATE TABLE IF NOT EXISTS users (
   name TEXT NOT NULL,
   email TEXT UNIQUE NOT NULL,
   password TEXT NOT NULL,
-  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+  phone TEXT,
+  dateOfBirth TEXT,
+  gender TEXT,
+  maritalStatus TEXT,
+  occupation TEXT,
+  monthlyIncome INTEGER,
+  savingsGoal INTEGER,
+  familySize INTEGER,
+  financialGoals TEXT,
+  city TEXT,
+  state TEXT,
+  preferredLanguage TEXT DEFAULT 'en',
+  notificationPreferences TEXT DEFAULT 'all',
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
 )`);
 
 // Routes
@@ -159,7 +173,7 @@ const authenticateToken = (req, res, next) => {
 
 // Get user profile (protected route)
 app.get('/api/profile', authenticateToken, (req, res) => {
-  db.get('SELECT id, name, email, created_at FROM users WHERE id = ?', [req.user.userId], (err, user) => {
+  db.get('SELECT id, name, email, phone, dateOfBirth, gender, maritalStatus, occupation, monthlyIncome, savingsGoal, familySize, financialGoals, city, state, preferredLanguage, notificationPreferences, created_at FROM users WHERE id = ?', [req.user.userId], (err, user) => {
     if (err) {
       return res.status(500).json({ error: 'Database error' });
     }
@@ -169,6 +183,121 @@ app.get('/api/profile', authenticateToken, (req, res) => {
     }
 
     res.json({ user });
+  });
+});
+
+// Update user profile (protected route)
+app.put('/api/profile/update', authenticateToken, (req, res) => {
+  const allowedFields = [
+    'name', 'phone', 'dateOfBirth', 'gender', 'maritalStatus', 
+    'occupation', 'monthlyIncome', 'savingsGoal', 'familySize', 
+    'financialGoals', 'city', 'state', 'preferredLanguage', 'notificationPreferences'
+  ];
+  
+  const updates = {};
+  const values = [];
+  const placeholders = [];
+  
+  // Build dynamic update query
+  Object.keys(req.body).forEach(key => {
+    if (allowedFields.includes(key) && req.body[key] !== undefined) {
+      updates[key] = req.body[key];
+      placeholders.push(`${key} = ?`);
+      values.push(req.body[key]);
+    }
+  });
+  
+  if (placeholders.length === 0) {
+    return res.status(400).json({ error: 'No valid fields to update' });
+  }
+  
+  // Add updated_at timestamp
+  placeholders.push('updated_at = ?');
+  values.push(new Date().toISOString());
+  
+  // Add user ID for WHERE clause
+  values.push(req.user.userId);
+  
+  const sql = `UPDATE users SET ${placeholders.join(', ')} WHERE id = ?`;
+  
+  db.run(sql, values, function(err) {
+    if (err) {
+      console.error('Database error:', err);
+      return res.status(500).json({ error: 'Failed to update profile' });
+    }
+    
+    if (this.changes === 0) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    
+    res.json({ 
+      message: 'Profile updated successfully',
+      updated: updates
+    });
+  });
+});
+
+// Change password (protected route)
+app.put('/api/profile/change-password', authenticateToken, async (req, res) => {
+  try {
+    const { currentPassword, newPassword } = req.body;
+    
+    if (!currentPassword || !newPassword) {
+      return res.status(400).json({ error: 'Current password and new password are required' });
+    }
+    
+    if (newPassword.length < 6) {
+      return res.status(400).json({ error: 'New password must be at least 6 characters long' });
+    }
+    
+    // Get current user
+    db.get('SELECT password FROM users WHERE id = ?', [req.user.userId], async (err, user) => {
+      if (err) {
+        return res.status(500).json({ error: 'Database error' });
+      }
+      
+      if (!user) {
+        return res.status(404).json({ error: 'User not found' });
+      }
+      
+      // Verify current password
+      const isValidPassword = await bcrypt.compare(currentPassword, user.password);
+      if (!isValidPassword) {
+        return res.status(400).json({ error: 'Current password is incorrect' });
+      }
+      
+      // Hash new password
+      const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+      
+      // Update password
+      db.run('UPDATE users SET password = ?, updated_at = ? WHERE id = ?', 
+        [hashedNewPassword, new Date().toISOString(), req.user.userId], 
+        function(err) {
+          if (err) {
+            return res.status(500).json({ error: 'Failed to update password' });
+          }
+          
+          res.json({ message: 'Password changed successfully' });
+        }
+      );
+    });
+  } catch (error) {
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+// Delete user account (protected route)
+app.delete('/api/profile/delete', authenticateToken, (req, res) => {
+  db.run('DELETE FROM users WHERE id = ?', [req.user.userId], function(err) {
+    if (err) {
+      return res.status(500).json({ error: 'Failed to delete account' });
+    }
+    
+    if (this.changes === 0) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    
+    res.json({ message: 'Account deleted successfully' });
   });
 });
 

@@ -4,18 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Login – NariNiti</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display        if (response.ok) {
-          // Store token in localStorage
-          localStorage.setItem('token', data.token);
-          localStorage.setItem('user', JSON.stringify(data.user));
-          
-          showMessage('Account created successfully! Redirecting to home...', 'success');
-          
-          // Redirect to home page after 1.5 seconds
-          setTimeout(() => {
-            window.location.href = 'index.html';
-          }, 1500);
-        } else {stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="index.css" />
   <style>
     body.login-page {
@@ -281,7 +270,7 @@
           
           // Redirect to home page after 2 seconds
           setTimeout(() => {
-            window.location.href = '/';
+            window.location.href = 'index.html';
           }, 2000);
         } else {
           showMessage(data.error || 'Signup failed', 'error');

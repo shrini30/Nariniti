@@ -23,20 +23,21 @@ function talkToLakshmi() {
 document.addEventListener('DOMContentLoaded', function() {
   const user = JSON.parse(localStorage.getItem('user'));
   const authLink = document.getElementById('auth-link');
+  const profileDropdown = document.getElementById('profile-dropdown');
+  const profileName = document.getElementById('profile-name');
   
-  if (user && authLink) {
-    authLink.textContent = `Hello, ${user.name}`;
-    authLink.href = '#';
-    authLink.onclick = function(e) {
-      e.preventDefault();
-      if (confirm('Do you want to logout?')) {
-        localStorage.removeItem('token');
-        localStorage.removeItem('user');
-        location.reload();
-      }
-    };
+  if (user && authLink && profileDropdown) {
+    authLink.style.display = 'none';
+    profileDropdown.style.display = 'block';
+    profileName.textContent = user.name;
   }
 });
+
+function logout() {
+  localStorage.removeItem('token');
+  localStorage.removeItem('user');
+  location.reload();
+}
 
 function changeLanguage(language) {
   console.log('Language changed to:', language);

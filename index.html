@@ -19,6 +19,16 @@
           <li><a href="#upgrade">Upgrade</a></li>
           <li><a href="#contact">Contact</a></li>
           <li><a href="login.html" id="auth-link">Login/Signup</a></li>
+          <li id="profile-dropdown" class="profile-dropdown" style="display: none;">
+            <a href="#" id="profile-trigger" class="profile-trigger">
+              <span id="profile-name">Profile</span>
+              <span class="dropdown-arrow">▼</span>
+            </a>
+            <div class="profile-menu">
+              <a href="profile.html">My Profile</a>
+              <a href="#" onclick="logout()">Logout</a>
+            </div>
+          </li>
           <li>
             <select class="language-switcher" onchange="changeLanguage(this.value)">
               <option value="en">English</option>

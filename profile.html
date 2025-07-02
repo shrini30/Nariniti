@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Profile – NariNiti</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="index.css" />
+  <style>
+    body.profile-page {
+      background: linear-gradient(135deg, #f4faff 0%, #e6f3ff 100%);
+      min-height: 100vh;
+    }
+    
+    .profile-container {
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+    
+    .profile-header {
+      background: white;
+      border-radius: 18px;
+      padding: 2rem;
+      box-shadow: 0 8px 32px rgba(30,60,114,0.12);
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+    
+    .profile-avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: linear-gradient(45deg, #3a8dde, #1e3c72);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1rem;
+      font-size: 3rem;
+      color: white;
+      font-weight: bold;
+    }
+    
+    .profile-name {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #1e3c72;
+      margin-bottom: 0.5rem;
+    }
+    
+    .profile-email {
+      color: #666;
+      font-size: 1rem;
+    }
+    
+    .profile-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+    
+    .profile-section {
+      background: white;
+      border-radius: 18px;
+      padding: 2rem;
+      box-shadow: 0 8px 32px rgba(30,60,114,0.12);
+    }
+    
+    .section-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #1e3c72;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      color: #333;
+    }
+    
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.8rem 1rem;
+      border: 1px solid #b3c6e0;
+      border-radius: 8px;
+      font-size: 1rem;
+      outline: none;
+      transition: border 0.2s;
+      box-sizing: border-box;
+    }
+    
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border: 1.5px solid #3a8dde;
+    }
+    
+    .form-group input[readonly] {
+      background-color: #f8f9fa;
+      cursor: not-allowed;
+    }
+    
+    .btn {
+      background: linear-gradient(90deg, #3a8dde 0%, #1e3c72 100%);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 0.8rem 1.5rem;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s;
+      margin-right: 0.5rem;
+    }
+    
+    .btn:hover {
+      background: linear-gradient(90deg, #1e3c72 0%, #3a8dde 100%);
+    }
+    
+    .btn-secondary {
+      background: #6c757d;
+    }
+    
+    .btn-secondary:hover {
+      background: #5a6268;
+    }
+    
+    .btn-danger {
+      background: #dc3545;
+    }
+    
+    .btn-danger:hover {
+      background: #c82333;
+    }
+    
+    .message {
+      margin-top: 1rem;
+      padding: 0.8rem;
+      border-radius: 6px;
+      text-align: center;
+      font-weight: 500;
+      display: none;
+    }
+    
+    .message.success {
+      background: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+    
+    .message.error {
+      background: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+    
+    .profile-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+    
+    .stat-item {
+      text-align: center;
+      padding: 1rem;
+      background: #f8f9fa;
+      border-radius: 8px;
+    }
+    
+    .stat-number {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #3a8dde;
+    }
+    
+    .stat-label {
+      font-size: 0.9rem;
+      color: #666;
+      margin-top: 0.25rem;
+    }
+    
+    @media (max-width: 768px) {
+      .profile-content {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+      
+      .profile-container {
+        margin: 1rem auto;
+      }
+      
+      .profile-section {
+        padding: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body class="profile-page">
+  <header class="main-header">
+    <div class="container">
+      <div class="logo"><a href="index.html" style="color: white; text-decoration: none;">NariNiti</a></div>
+      <nav class="main-nav">
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="index.html#vision">Vision</a></li>
+          <li><a href="index.html#services">Services</a></li>
+          <li><a href="index.html#contact">Contact</a></li>
+          <li class="profile-dropdown">
+            <a href="#" class="profile-trigger">
+              <span id="profile-name">Profile</span>
+              <span class="dropdown-arrow">▼</span>
+            </a>
+            <div class="profile-menu">
+              <a href="profile.html">My Profile</a>
+              <a href="#" onclick="logout()">Logout</a>
+            </div>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="profile-container">
+      <!-- Profile Header -->
+      <div class="profile-header">
+        <div class="profile-avatar" id="profile-avatar">
+          <!-- Avatar will be generated from first letter of name -->
+        </div>
+        <div class="profile-name" id="header-name">Loading...</div>
+        <div class="profile-email" id="header-email">Loading...</div>
+        <div class="profile-stats">
+          <div class="stat-item">
+            <div class="stat-number" id="member-since">--</div>
+            <div class="stat-label">Member Since</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">5</div>
+            <div class="stat-label">Lessons Completed</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">₹2,500</div>
+            <div class="stat-label">Monthly Savings Goal</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="profile-content">
+        <!-- Personal Information -->
+        <div class="profile-section">
+          <h3 class="section-title">👤 Personal Information</h3>
+          <form id="personal-info-form">
+            <div class="form-group">
+              <label for="full-name">Full Name</label>
+              <input type="text" id="full-name" name="name" required />
+            </div>
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <input type="email" id="email" name="email" readonly />
+            </div>
+            <div class="form-group">
+              <label for="phone">Phone Number</label>
+              <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" />
+            </div>
+            <div class="form-group">
+              <label for="dob">Date of Birth</label>
+              <input type="date" id="dob" name="dateOfBirth" />
+            </div>
+            <div class="form-group">
+              <label for="gender">Gender</label>
+              <select id="gender" name="gender">
+                <option value="">Select Gender</option>
+                <option value="female">Female</option>
+                <option value="male">Male</option>
+                <option value="other">Other</option>
+                <option value="prefer-not-to-say">Prefer not to say</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="marital-status">Marital Status</label>
+              <select id="marital-status" name="maritalStatus">
+                <option value="">Select Status</option>
+                <option value="single">Single</option>
+                <option value="married">Married</option>
+                <option value="divorced">Divorced</option>
+                <option value="widowed">Widowed</option>
+              </select>
+            </div>
+            <button type="submit" class="btn">Update Information</button>
+            <div id="personal-message" class="message"></div>
+          </form>
+        </div>
+
+        <!-- Financial Information -->
+        <div class="profile-section">
+          <h3 class="section-title">💰 Financial Information</h3>
+          <form id="financial-info-form">
+            <div class="form-group">
+              <label for="occupation">Occupation</label>
+              <input type="text" id="occupation" name="occupation" placeholder="e.g., Teacher, Homemaker, Business Owner" />
+            </div>
+            <div class="form-group">
+              <label for="monthly-income">Monthly Income (₹)</label>
+              <input type="number" id="monthly-income" name="monthlyIncome" placeholder="Enter your monthly income" />
+            </div>
+            <div class="form-group">
+              <label for="savings-goal">Monthly Savings Goal (₹)</label>
+              <input type="number" id="savings-goal" name="savingsGoal" placeholder="How much do you want to save monthly?" />
+            </div>
+            <div class="form-group">
+              <label for="family-size">Family Size</label>
+              <input type="number" id="family-size" name="familySize" placeholder="Number of family members" min="1" />
+            </div>
+            <div class="form-group">
+              <label for="financial-goals">Primary Financial Goals</label>
+              <textarea id="financial-goals" name="financialGoals" rows="3" placeholder="e.g., Child's education, Home purchase, Emergency fund"></textarea>
+            </div>
+            <button type="submit" class="btn">Update Financial Info</button>
+            <div id="financial-message" class="message"></div>
+          </form>
+        </div>
+
+        <!-- Location & Preferences -->
+        <div class="profile-section">
+          <h3 class="section-title">📍 Location & Preferences</h3>
+          <form id="preferences-form">
+            <div class="form-group">
+              <label for="city">City</label>
+              <input type="text" id="city" name="city" placeholder="Enter your city" />
+            </div>
+            <div class="form-group">
+              <label for="state">State</label>
+              <select id="state" name="state">
+                <option value="">Select State</option>
+                <option value="andhra-pradesh">Andhra Pradesh</option>
+                <option value="telangana">Telangana</option>
+                <option value="tamil-nadu">Tamil Nadu</option>
+                <option value="karnataka">Karnataka</option>
+                <option value="kerala">Kerala</option>
+                <option value="maharashtra">Maharashtra</option>
+                <option value="gujarat">Gujarat</option>
+                <option value="rajasthan">Rajasthan</option>
+                <option value="uttar-pradesh">Uttar Pradesh</option>
+                <option value="bihar">Bihar</option>
+                <option value="west-bengal">West Bengal</option>
+                <option value="odisha">Odisha</option>
+                <option value="madhya-pradesh">Madhya Pradesh</option>
+                <option value="chhattisgarh">Chhattisgarh</option>
+                <option value="jharkhand">Jharkhand</option>
+                <option value="punjab">Punjab</option>
+                <option value="haryana">Haryana</option>
+                <option value="himachal-pradesh">Himachal Pradesh</option>
+                <option value="uttarakhand">Uttarakhand</option>
+                <option value="jammu-kashmir">Jammu & Kashmir</option>
+                <option value="assam">Assam</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="preferred-language">Preferred Language</label>
+              <select id="preferred-language" name="preferredLanguage">
+                <option value="en">English</option>
+                <option value="hi">हिन्दी (Hindi)</option>
+                <option value="ta">தமிழ் (Tamil)</option>
+                <option value="bn">বাংলা (Bengali)</option>
+                <option value="gu">ગુજરાતી (Gujarati)</option>
+                <option value="te">తెలుగు (Telugu)</option>
+                <option value="mr">मराठी (Marathi)</option>
+                <option value="kn">ಕನ್ನಡ (Kannada)</option>
+                <option value="ml">മലയാളം (Malayalam)</option>
+                <option value="pa">ਪੰਜਾਬੀ (Punjabi)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="notification-preferences">Notification Preferences</label>
+              <select id="notification-preferences" name="notificationPreferences">
+                <option value="all">All notifications</option>
+                <option value="important">Important only</option>
+                <option value="weekly">Weekly digest</option>
+                <option value="none">No notifications</option>
+              </select>
+            </div>
+            <button type="submit" class="btn">Update Preferences</button>
+            <div id="preferences-message" class="message"></div>
+          </form>
+        </div>
+
+        <!-- Security Settings -->
+        <div class="profile-section">
+          <h3 class="section-title">🔒 Security Settings</h3>
+          <form id="password-form">
+            <div class="form-group">
+              <label for="current-password">Current Password</label>
+              <input type="password" id="current-password" name="currentPassword" required />
+            </div>
+            <div class="form-group">
+              <label for="new-password">New Password</label>
+              <input type="password" id="new-password" name="newPassword" required minlength="6" />
+            </div>
+            <div class="form-group">
+              <label for="confirm-password">Confirm New Password</label>
+              <input type="password" id="confirm-password" name="confirmPassword" required minlength="6" />
+            </div>
+            <button type="submit" class="btn">Change Password</button>
+            <div id="password-message" class="message"></div>
+          </form>
+          
+          <hr style="margin: 2rem 0; border: 1px solid #eee;">
+          
+          <div class="form-group">
+            <label>Account Actions</label>
+            <button class="btn btn-secondary" onclick="downloadData()">Download My Data</button>
+            <button class="btn btn-danger" onclick="deleteAccount()">Delete Account</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p style="text-align:center; color:#666; margin-top:2rem;">&copy; 2025 NariNiti | Empowering Women</p>
+  </footer>
+
+  <script>
+    // Load user data on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      loadUserProfile();
+    });
+
+    // Load and display user profile data
+    async function loadUserProfile() {
+      const user = JSON.parse(localStorage.getItem('user'));
+      const token = localStorage.getItem('token');
+      
+      if (!user || !token) {
+        window.location.href = 'login.html';
+        return;
+      }
+
+      // Update header information
+      document.getElementById('profile-name').textContent = user.name;
+      document.getElementById('header-name').textContent = user.name;
+      document.getElementById('header-email').textContent = user.email;
+      
+      // Generate avatar from first letter
+      const avatar = document.getElementById('profile-avatar');
+      avatar.textContent = user.name.charAt(0).toUpperCase();
+      
+      // Set member since date (assuming created_at is available)
+      const memberSince = document.getElementById('member-since');
+      memberSince.textContent = '2025'; // You can update this with actual date logic
+      
+      // Populate form fields
+      document.getElementById('full-name').value = user.name || '';
+      document.getElementById('email').value = user.email || '';
+      
+      // Try to load extended profile data
+      try {
+        const response = await fetch('/api/profile', {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        
+        if (response.ok) {
+          const data = await response.json();
+          populateProfileData(data.user);
+        }
+      } catch (error) {
+        console.error('Error loading profile:', error);
+      }
+    }
+
+    // Populate profile form data
+    function populateProfileData(userData) {
+      if (userData.phone) document.getElementById('phone').value = userData.phone;
+      if (userData.dateOfBirth) document.getElementById('dob').value = userData.dateOfBirth;
+      if (userData.gender) document.getElementById('gender').value = userData.gender;
+      if (userData.maritalStatus) document.getElementById('marital-status').value = userData.maritalStatus;
+      if (userData.occupation) document.getElementById('occupation').value = userData.occupation;
+      if (userData.monthlyIncome) document.getElementById('monthly-income').value = userData.monthlyIncome;
+      if (userData.savingsGoal) document.getElementById('savings-goal').value = userData.savingsGoal;
+      if (userData.familySize) document.getElementById('family-size').value = userData.familySize;
+      if (userData.financialGoals) document.getElementById('financial-goals').value = userData.financialGoals;
+      if (userData.city) document.getElementById('city').value = userData.city;
+      if (userData.state) document.getElementById('state').value = userData.state;
+      if (userData.preferredLanguage) document.getElementById('preferred-language').value = userData.preferredLanguage;
+      if (userData.notificationPreferences) document.getElementById('notification-preferences').value = userData.notificationPreferences;
+    }
+
+    // Show message
+    function showMessage(elementId, message, type) {
+      const messageEl = document.getElementById(elementId);
+      messageEl.textContent = message;
+      messageEl.className = `message ${type}`;
+      messageEl.style.display = 'block';
+      
+      setTimeout(() => {
+        messageEl.style.display = 'none';
+      }, 5000);
+    }
+
+    // Handle personal information form
+    document.getElementById('personal-info-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      const formData = new FormData(this);
+      const data = Object.fromEntries(formData);
+      
+      try {
+        const response = await fetch('/api/profile/update', {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+          },
+          body: JSON.stringify(data)
+        });
+        
+        if (response.ok) {
+          const result = await response.json();
+          showMessage('personal-message', 'Personal information updated successfully!', 'success');
+          
+          // Update localStorage with new name
+          if (data.name) {
+            const user = JSON.parse(localStorage.getItem('user'));
+            user.name = data.name;
+            localStorage.setItem('user', JSON.stringify(user));
+            
+            // Update displayed name
+            document.getElementById('profile-name').textContent = data.name;
+            document.getElementById('header-name').textContent = data.name;
+            document.getElementById('profile-avatar').textContent = data.name.charAt(0).toUpperCase();
+          }
+        } else {
+          const error = await response.json();
+          showMessage('personal-message', error.error || 'Failed to update information', 'error');
+        }
+      } catch (error) {
+        showMessage('personal-message', 'Network error. Please try again.', 'error');
+      }
+    });
+
+    // Handle financial information form
+    document.getElementById('financial-info-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      const formData = new FormData(this);
+      const data = Object.fromEntries(formData);
+      
+      try {
+        const response = await fetch('/api/profile/update', {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+          },
+          body: JSON.stringify(data)
+        });
+        
+        if (response.ok) {
+          showMessage('financial-message', 'Financial information updated successfully!', 'success');
+        } else {
+          const error = await response.json();
+          showMessage('financial-message', error.error || 'Failed to update information', 'error');
+        }
+      } catch (error) {
+        showMessage('financial-message', 'Network error. Please try again.', 'error');
+      }
+    });
+
+    // Handle preferences form
+    document.getElementById('preferences-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      const formData = new FormData(this);
+      const data = Object.fromEntries(formData);
+      
+      try {
+        const response = await fetch('/api/profile/update', {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+          },
+          body: JSON.stringify(data)
+        });
+        
+        if (response.ok) {
+          showMessage('preferences-message', 'Preferences updated successfully!', 'success');
+        } else {
+          const error = await response.json();
+          showMessage('preferences-message', error.error || 'Failed to update preferences', 'error');
+        }
+      } catch (error) {
+        showMessage('preferences-message', 'Network error. Please try again.', 'error');
+      }
+    });
+
+    // Handle password change form
+    document.getElementById('password-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      const newPassword = document.getElementById('new-password').value;
+      const confirmPassword = document.getElementById('confirm-password').value;
+      
+      if (newPassword !== confirmPassword) {
+        showMessage('password-message', 'New passwords do not match', 'error');
+        return;
+      }
+      
+      const formData = new FormData(this);
+      const data = Object.fromEntries(formData);
+      
+      try {
+        const response = await fetch('/api/profile/change-password', {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+          },
+          body: JSON.stringify(data)
+        });
+        
+        if (response.ok) {
+          showMessage('password-message', 'Password changed successfully!', 'success');
+          this.reset();
+        } else {
+          const error = await response.json();
+          showMessage('password-message', error.error || 'Failed to change password', 'error');
+        }
+      } catch (error) {
+        showMessage('password-message', 'Network error. Please try again.', 'error');
+      }
+    });
+
+    // Logout function
+    function logout() {
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      window.location.href = 'index.html';
+    }
+
+    // Download user data
+    function downloadData() {
+      const user = JSON.parse(localStorage.getItem('user'));
+      const data = {
+        name: user.name,
+        email: user.email,
+        exportDate: new Date().toISOString(),
+        note: 'This is your personal data export from NariNiti'
+      };
+      
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `nariniti-profile-${Date.now()}.json`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    // Delete account
+    async function deleteAccount() {
+      if (confirm('Are you sure you want to delete your account? This action cannot be undone.')) {
+        if (confirm('This will permanently delete all your data. Are you absolutely sure?')) {
+          try {
+            const response = await fetch('/api/profile/delete', {
+              method: 'DELETE',
+              headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+              }
+            });
+            
+            if (response.ok) {
+              alert('Your account has been deleted successfully.');
+              localStorage.removeItem('token');
+              localStorage.removeItem('user');
+              window.location.href = 'index.html';
+            } else {
+              const error = await response.json();
+              alert(error.error || 'Failed to delete account');
+            }
+          } catch (error) {
+            alert('Network error. Please try again.');
+          }
+        }
+      }
+    }
+  </script>
+</body>
+</html>
