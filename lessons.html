@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Financial Lessons – NariNiti</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+    
+    .header {
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      padding: 3rem;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    
+    .lesson-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    
+    .lesson-card {
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+    }
+    
+    .lesson-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+    
+    .lesson-card-header {
+      background: linear-gradient(135deg, #3a8dde 0%, #1e3c72 100%);
+      color: white;
+      padding: 2rem;
+      text-align: center;
+    }
+    
+    .lesson-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+    
+    .lesson-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    
+    .lesson-subtitle {
+      font-size: 1rem;
+      opacity: 0.9;
+    }
+    
+    .lesson-content {
+      padding: 2rem;
+    }
+    
+    .lesson-description {
+      color: #666;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+    
+    .lesson-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 1rem;
+      border-top: 1px solid #eee;
+    }
+    
+    .lesson-duration {
+      color: #999;
+      font-size: 0.9rem;
+    }
+    
+    .lesson-type {
+      background: #e3f2fd;
+      color: #1976d2;
+      padding: 0.3rem 0.8rem;
+      border-radius: 15px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .progress-indicator {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+      color: #f57c00;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      border: 2px solid #ffb74d;
+    }
+    
+    .status-icon {
+      font-size: 1rem;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+    
+    .status-text {
+      font-size: 0.8rem;
+      color: #f57c00;
+      font-weight: 600;
+    }
+    
+    .close-btn {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: rgba(0, 0, 0, 0.7);
+      color: white;
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      font-size: 1.2rem;
+      cursor: pointer;
+      z-index: 1001;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .close-btn:hover {
+      background: rgba(0, 0, 0, 0.9);
+    }
+    
+    .main-title {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: #1e3c72;
+      margin-bottom: 1rem;
+    }
+    
+    .subtitle {
+      font-size: 1.2rem;
+      color: #666;
+      margin-bottom: 2rem;
+    }
+    
+    .emoji-large {
+      font-size: 4rem;
+      margin-bottom: 1.5rem;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <button class="close-btn" onclick="goHome()">✕</button>
+  
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <div class="emoji-large">🎓</div>
+      <h1 class="main-title">Financial Lessons</h1>
+      <p class="subtitle">Choose a lesson to start your financial learning journey</p>
+    </div>
+
+    <!-- Lessons Grid -->
+    <div class="lesson-grid">
+      <!-- Bank Account Lesson -->
+      <div class="lesson-card" onclick="openLesson('bank')">
+        <div class="lesson-card-header">
+          <div class="lesson-icon">🏦</div>
+          <div class="lesson-title">Bank Account</div>
+          <div class="lesson-subtitle">Why open a bank account</div>
+        </div>
+        <div class="lesson-content">
+          <p class="lesson-description">
+            Learn the importance of having a bank account, different types of accounts available, 
+            and how to choose the right one for your needs. Essential knowledge for financial security.
+          </p>
+          <div class="lesson-meta">
+            <span class="lesson-duration">📖 PDF Guide</span>
+            <div class="progress-indicator">
+              <span class="status-icon">📚</span>
+              <span class="status-text">Ready to Learn</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function goHome() {
+      window.location.href = 'index.html';
+    }
+    
+    function openLesson(lessonType) {
+      if (lessonType === 'bank') {
+        window.location.href = 'lesson-bank.html';
+      }
+    }
+  </script>
+</body>
+</html>

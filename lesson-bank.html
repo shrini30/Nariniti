@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bank Account Lesson – NariNiti</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0 !important;
+      padding: 0 !important;
+      box-sizing: border-box;
+    }
+    
+    html, body {
+      margin: 0 !important;
+      padding: 0 !important;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f5f5f5;
+    }
+    
+    .container {
+      width: 100vw;
+      height: 100vh;
+      padding: 0 !important;
+      margin: 0 !important;
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 0;
+      left: 0;
+    }
+    
+    .header {
+      background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-shrink: 0;
+      z-index: 100;
+      height: 80px;
+      border-bottom: 1px solid rgba(58, 141, 222, 0.1);
+    }
+    
+    .header-content {
+      flex: 1;
+    }
+    
+    .lesson-title {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #1e3c72;
+      margin-bottom: 0.3rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .lesson-subtitle {
+      font-size: 1rem;
+      color: #666;
+      font-weight: 400;
+    }
+    
+    .back-btn {
+      background: linear-gradient(135deg, #3a8dde 0%, #1e3c72 100%);
+      color: white;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      border-radius: 25px;
+      cursor: pointer;
+      font-weight: 600;
+      font-family: 'Poppins', sans-serif;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.95rem;
+      box-shadow: 0 4px 15px rgba(58, 141, 222, 0.3);
+    }
+    
+    .back-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(58, 141, 222, 0.4);
+      background: linear-gradient(135deg, #4a9dfe 0%, #2e4c82 100%);
+    }
+    
+    .pdf-container {
+      background: white;
+      overflow: hidden;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .pdf-header {
+      background: linear-gradient(135deg, #3a8dde 0%, #1e3c72 100%);
+      color: white;
+      padding: 0.8rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-shrink: 0;
+      height: 60px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    .pdf-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .pdf-controls {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+    
+    .pdf-btn {
+      background: rgba(255, 255, 255, 0.15);
+      color: white;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      padding: 0.6rem 1.2rem;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 500;
+      font-family: 'Poppins', sans-serif;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      backdrop-filter: blur(10px);
+    }
+    
+    .pdf-btn:hover {
+      background: rgba(255, 255, 255, 0.25);
+      border-color: rgba(255, 255, 255, 0.5);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+    
+    .pdf-btn:active {
+      transform: translateY(0);
+    }
+    
+    .pdf-viewer {
+      width: 100%;
+      height: 100%;
+      border: none;
+      flex: 1;
+      display: block;
+    }
+    
+    object.pdf-viewer {
+      min-height: 600px;
+    }
+    
+    .error-message {
+      padding: 3rem;
+      text-align: center;
+      color: #666;
+    }
+    
+    .error-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+    
+    .upload-section {
+      background: #f8f9fa;
+      padding: 2rem;
+      text-align: center;
+      border-top: 1px solid #eee;
+    }
+    
+    .upload-btn {
+      background: linear-gradient(135deg, #4caf50 0%, #2e7d32 100%);
+      color: white;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      border-radius: 25px;
+      cursor: pointer;
+      font-weight: 500;
+      margin-top: 1rem;
+    }
+    
+    .close-btn {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: rgba(0, 0, 0, 0.7);
+      color: white;
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      font-size: 1.2rem;
+      cursor: pointer;
+      z-index: 1001;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .close-btn:hover {
+      background: rgba(0, 0, 0, 0.9);
+    }
+  </style>
+</head>
+<body>
+  <button class="close-btn" onclick="goHome()">✕</button>
+  
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <div class="header-content">
+        <h1 class="lesson-title">
+          <span>🏦</span>
+          <span>Bank Account Lesson</span>
+        </h1>
+      </div>
+      <a href="lessons.html" class="back-btn">
+        <span>←</span>
+        <span>Back to Lessons</span>
+      </a>
+    </div>
+
+    <!-- PDF Container -->
+    <div class="pdf-container">
+      <div class="pdf-header">
+        <div class="pdf-title">
+          <span>Why open a bank account - Essential financial knowledge</span>
+        </div>
+        <div class="pdf-controls">
+          <button class="pdf-btn" onclick="downloadPDF()">
+            <span>Download</span>
+          </button>
+          <button class="pdf-btn" onclick="openInNewTab()">
+            <span>Open in New Tab</span>
+          </button>
+        </div>
+      </div>
+      
+      <div id="pdf-content">
+        <!-- Primary PDF display using object -->
+        <object 
+          class="pdf-viewer" 
+          data="./Why open a bank account.pdf#view=FitH&zoom=page-width"
+          type="application/pdf"
+          onload="pdfLoaded()"
+          onerror="pdfError()">
+          <!-- Fallback iframe -->
+          <iframe 
+            class="pdf-viewer" 
+            src="./Why open a bank account.pdf#view=FitH&zoom=page-width"
+            type="application/pdf">
+            <!-- Fallback for browsers that don't support PDF -->
+            <embed 
+              class="pdf-viewer"
+              src="./Why open a bank account.pdf#view=FitH&zoom=page-width"
+              type="application/pdf">
+            </embed>
+          </iframe>
+        </object>
+      </div>
+      
+      <!-- Fallback content if PDF doesn't load -->
+      <div id="pdf-fallback" style="display: none;">
+        <div class="error-message">
+          <div class="error-icon">📄</div>
+          <h3>PDF Not Found</h3>
+          <p>The PDF file "Why open a bank account.pdf" is not available in the current location.</p>
+          <p style="margin-top: 1rem; font-size: 0.9rem; color: #999;">
+            Expected location: /Users/xavier.monica/Downloads/Nariniti/Why open a bank account.pdf
+          </p>
+        </div>
+        
+        <div class="upload-section">
+          <p><strong>To view this lesson:</strong></p>
+          <p>Your browser may not support embedded PDF viewing. You can:</p>
+          <div style="margin: 1rem 0;">
+            <button class="upload-btn" onclick="openInNewTab()" style="margin: 0.5rem;">
+              🔗 Open PDF in New Tab
+            </button>
+            <button class="upload-btn" onclick="downloadPDF()" style="margin: 0.5rem;">
+              📥 Download PDF
+            </button>
+          </div>
+          <p style="font-size: 0.9rem; color: #666;">Or upload the PDF file manually:</p>
+          <input type="file" id="pdf-upload" accept=".pdf" style="display: none;" onchange="handlePDFUpload(event)">
+          <button class="upload-btn" onclick="document.getElementById('pdf-upload').click()">
+            📁 Select PDF File
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function goHome() {
+      window.location.href = 'index.html';
+    }
+    
+    function pdfLoaded() {
+      console.log('PDF loaded successfully');
+    }
+    
+    function pdfError() {
+      console.log('PDF failed to load, showing fallback');
+      document.getElementById('pdf-content').style.display = 'none';
+      document.getElementById('pdf-fallback').style.display = 'block';
+    }
+    
+    function downloadPDF() {
+      const link = document.createElement('a');
+      link.href = './Why open a bank account.pdf';
+      link.download = 'Why open a bank account.pdf';
+      link.click();
+    }
+    
+    function openInNewTab() {
+      window.open('./Why open a bank account.pdf', '_blank');
+    }
+    
+    function handlePDFUpload(event) {
+      const file = event.target.files[0];
+      if (file && file.type === 'application/pdf') {
+        const url = URL.createObjectURL(file);
+        const object = document.querySelector('object.pdf-viewer');
+        const iframe = document.querySelector('iframe.pdf-viewer');
+        
+        if (object) object.data = url;
+        if (iframe) iframe.src = url;
+        
+        document.getElementById('pdf-content').style.display = 'block';
+        document.getElementById('pdf-fallback').style.display = 'none';
+      } else {
+        alert('Please select a valid PDF file.');
+      }
+    }
+    
+    // Enhanced PDF loading check
+    setTimeout(() => {
+      const object = document.querySelector('object.pdf-viewer');
+      const iframe = document.querySelector('iframe.pdf-viewer');
+      
+      // Check if PDF is loading properly
+      if (object && !object.contentDocument) {
+        console.log('Object PDF failed, trying alternative methods');
+        // Try to force reload with different parameters
+        object.data = './Why open a bank account.pdf#view=Fit&toolbar=1&navpanes=1&scrollbar=1';
+      }
+      
+      // Additional fallback check
+      setTimeout(() => {
+        const testImg = new Image();
+        testImg.onerror = () => {
+          // If we can't even test the PDF, show instructions
+          console.log('PDF access may be restricted, showing fallback');
+        };
+        testImg.src = './Why open a bank account.pdf';
+      }, 1000);
+      
+    }, 2000);
+    
+    // Force PDF to fit the container
+    window.addEventListener('load', () => {
+      const pdfContainer = document.querySelector('.pdf-container');
+      const viewers = document.querySelectorAll('.pdf-viewer');
+      
+      viewers.forEach(viewer => {
+        viewer.style.width = '100%';
+        viewer.style.height = '100%';
+      });
+    });
+  </script>
+</body>
+</html>

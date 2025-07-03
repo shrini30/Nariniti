@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Financial Lessons Presentation – NariNiti</title>
+  <title>Financial Lessons – NariNiti</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     * {
@@ -16,111 +16,70 @@
       font-family: 'Poppins', sans-serif;
       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       min-height: 100vh;
-      overflow: hidden;
+      overflow-x: hidden;
     }
     
-    .presentation-container {
-      position: relative;
-      width: 100vw;
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
     }
     
-    .slide {
-      width: 95vw;
-      height: 95vh;
+    .header {
       background: white;
       border-radius: 20px;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-      display: none;
-      overflow: hidden;
-      position: relative;
-      animation: slideIn 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    }
-    
-    .slide.active {
-      display: flex;
-      flex-direction: column;
-    }
-    
-    @keyframes slideIn {
-      from { 
-        opacity: 0; 
-        transform: scale(0.8) translateY(50px);
-      }
-      to { 
-        opacity: 1; 
-        transform: scale(1) translateY(0);
-      }
-    }
-    
-    .slide-header {
-      background: linear-gradient(135deg, #3a8dde 0%, #1e3c72 100%);
-      color: white;
-      padding: 1.5rem 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    
-    .slide-title {
-      font-size: 2rem;
-      font-weight: 700;
-    }
-    
-    .slide-counter {
-      background: rgba(255, 255, 255, 0.2);
-      padding: 0.5rem 1rem;
-      border-radius: 20px;
-      font-size: 0.9rem;
-      font-weight: 500;
-    }
-    
-    .slide-content {
-      flex: 1;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
       padding: 3rem;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
       text-align: center;
-    }
-    
-    .emoji-large {
-      font-size: 6rem;
       margin-bottom: 2rem;
     }
     
+    .lesson-section {
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      margin-bottom: 2rem;
+      overflow: hidden;
+    }
+    
+    .lesson-header {
+      background: linear-gradient(135deg, #3a8dde 0%, #1e3c72 100%);
+      color: white;
+      padding: 2rem;
+    }
+    
+    .lesson-title {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    
+    .lesson-subtitle {
+      font-size: 1.1rem;
+      opacity: 0.9;
+    }
+    
+    .lesson-content {
+      padding: 3rem;
+    }
+    
+    .emoji-large {
+      font-size: 4rem;
+      margin-bottom: 1.5rem;
+      display: block;
+    }
+    
     .main-title {
-      font-size: 3.5rem;
+      font-size: 2.5rem;
       font-weight: 800;
       color: #1e3c72;
       margin-bottom: 1.5rem;
     }
     
     .subtitle {
-      font-size: 1.5rem;
+      font-size: 1.2rem;
       color: #666;
       margin-bottom: 2rem;
-    }
-    
-    .progress-container {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 4px;
-      background: rgba(255, 255, 255, 0.3);
-      z-index: 1000;
-    }
-    
-    .progress-bar {
-      height: 100%;
-      background: linear-gradient(90deg, #3a8dde, #1e3c72);
-      width: 0%;
-      transition: width 0.3s ease;
     }
     
     .close-btn {
@@ -145,208 +104,104 @@
       background: rgba(0, 0, 0, 0.9);
     }
     
-    .navigation {
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      gap: 1rem;
-      z-index: 1001;
+    .budget-item {
+      background: #f8f9fa;
+      padding: 1.5rem;
+      border-radius: 10px;
+      margin: 1rem 0;
+      border-left: 4px solid #3a8dde;
     }
     
-    .nav-btn {
-      background: rgba(0, 0, 0, 0.7);
-      color: white;
-      border: none;
-      padding: 0.8rem 1.5rem;
-      border-radius: 25px;
-      cursor: pointer;
-      font-weight: 500;
-      transition: all 0.3s ease;
+    .budget-item h3 {
+      margin-bottom: 0.5rem;
     }
     
-    .nav-btn:hover {
-      background: rgba(0, 0, 0, 0.9);
-      transform: translateY(-2px);
+    .highlight-box {
+      background: linear-gradient(135deg, #e8f5e8 0%, #c8e6c9 100%);
+      padding: 2rem;
+      border-radius: 15px;
+      margin: 2rem 0;
+      text-align: center;
     }
     
-    .nav-btn:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
+    .highlight-box h3 {
+      color: #2e7d32;
+      margin-bottom: 1rem;
     }
     
-    .lesson-menu {
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      z-index: 1001;
+    .highlight-box p {
+      margin: 0.5rem 0;
     }
     
-    .lesson-select {
-      background: rgba(0, 0, 0, 0.7);
-      color: white;
-      border: none;
-      padding: 0.8rem 1rem;
-      border-radius: 20px;
-      font-size: 0.9rem;
-      cursor: pointer;
-    }
-    
-    .lesson-select option {
-      background: #333;
-      color: white;
+    .highlight-box .amount {
+      font-size: 1.3rem;
+      font-weight: bold;
+      color: #1b5e20;
     }
   </style>
 </head>
 <body>
-  <div class="progress-container">
-    <div class="progress-bar" id="progress-bar"></div>
-  </div>
-  
   <button class="close-btn" onclick="goHome()">✕</button>
   
-  <div class="lesson-menu">
-    <select class="lesson-select" id="lesson-select" onchange="jumpToLesson(this.value)">
-      <option value="0">📚 Choose Lesson</option>
-      <option value="1">1️⃣ 50-30-20 Rule</option>
-      <option value="2">2️⃣ Compound Interest</option>
-      <option value="3">3️⃣ Emergency Fund</option>
-      <option value="4">4️⃣ Investment Basics</option>
-      <option value="5">5️⃣ Debt Management</option>
-      <option value="6">6️⃣ Tax Planning</option>
-      <option value="7">7️⃣ Insurance</option>
-      <option value="8">8️⃣ Retirement Planning</option>
-      <option value="9">9️⃣ Financial Goals</option>
-      <option value="10">🔟 Building Wealth</option>
-    </select>
-  </div>
-
-  <div class="presentation-container">
-    <!-- Welcome Slide -->
-    <div class="slide active">
-      <div class="slide-header">
-        <div class="slide-title">🎓 Financial Lessons</div>
-        <div class="slide-counter">Welcome</div>
-      </div>
-      <div class="slide-content">
-        <div class="emoji-large">💰</div>
-        <h1 class="main-title">Bite-Sized Financial Lessons</h1>
-        <p class="subtitle">Master money management with interactive lessons designed for Indian women</p>
-        <div style="margin-top: 2rem;">
-          <p style="font-size: 1.2rem; color: #666;">Choose a lesson from the dropdown above or use the navigation buttons below</p>
-        </div>
-      </div>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <div class="emoji-large">💰</div>
+      <h1 class="main-title">Financial Lessons</h1>
+      <p class="subtitle">Master money management with bite-sized lessons designed for Indian women</p>
     </div>
 
     <!-- Lesson 1: 50-30-20 Rule -->
-    <div class="slide">
-      <div class="slide-header">
-        <div class="slide-title">💡 The 50-30-20 Rule</div>
-        <div class="slide-counter">Lesson 1 | Slide 1/3</div>
+    <div class="lesson-section">
+      <div class="lesson-header">
+        <div class="lesson-title">💡 The 50-30-20 Rule</div>
+        <div class="lesson-subtitle">A Simple Budget Framework for Financial Success</div>
       </div>
-      <div class="slide-content">
-        <div class="emoji-large">💡</div>
-        <h1 class="main-title">The 50-30-20 Rule</h1>
-        <p class="subtitle">A Simple Budget Framework for Financial Success</p>
-        <div style="margin-top: 2rem; text-align: left; max-width: 600px;">
-          <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 10px; margin: 1rem 0;">
-            <h3 style="color: #4caf50;">50% - Needs</h3>
-            <p>Rent, utilities, groceries, transportation</p>
-          </div>
-          <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 10px; margin: 1rem 0;">
-            <h3 style="color: #ff9800;">30% - Wants</h3>
-            <p>Entertainment, dining out, hobbies, shopping</p>
-          </div>
-          <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 10px; margin: 1rem 0;">
-            <h3 style="color: #2196f3;">20% - Savings & Investments</h3>
-            <p>Emergency fund, retirement, investments</p>
-          </div>
+      <div class="lesson-content">
+        <p style="font-size: 1.1rem; margin-bottom: 2rem;">The 50-30-20 rule is a simple budgeting method that helps you allocate your income effectively:</p>
+        
+        <div class="budget-item">
+          <h3 style="color: #4caf50;">50% - Needs</h3>
+          <p>Essential expenses like rent, utilities, groceries, transportation, and minimum debt payments.</p>
+        </div>
+        
+        <div class="budget-item">
+          <h3 style="color: #ff9800;">30% - Wants</h3>
+          <p>Non-essential expenses like entertainment, dining out, hobbies, shopping, and subscriptions.</p>
+        </div>
+        
+        <div class="budget-item">
+          <h3 style="color: #2196f3;">20% - Savings & Investments</h3>
+          <p>Emergency fund, retirement savings, investments, and extra debt payments.</p>
         </div>
       </div>
     </div>
 
     <!-- Lesson 2: Compound Interest -->
-    <div class="slide">
-      <div class="slide-header">
-        <div class="slide-title">✨ Compound Interest Magic</div>
-        <div class="slide-counter">Lesson 2 | Slide 1/2</div>
+    <div class="lesson-section">
+      <div class="lesson-header">
+        <div class="lesson-title">✨ Compound Interest Magic</div>
+        <div class="lesson-subtitle">The 8th Wonder of the World!</div>
       </div>
-      <div class="slide-content">
-        <div class="emoji-large">✨</div>
-        <h1 class="main-title">Compound Interest Magic</h1>
-        <p class="subtitle">The 8th Wonder of the World!</p>
-        <div style="background: linear-gradient(135deg, #e8f5e8 0%, #c8e6c9 100%); padding: 2rem; border-radius: 15px; margin: 2rem 0; max-width: 500px;">
-          <h3 style="color: #2e7d32; margin-bottom: 1rem;">Example: ₹10,000 invested</h3>
+      <div class="lesson-content">
+        <p style="font-size: 1.1rem; margin-bottom: 2rem;">Compound interest is when you earn interest on both your original investment and previously earned interest. It's the key to building long-term wealth.</p>
+        
+        <div class="highlight-box">
+          <h3>Example: ₹10,000 invested</h3>
           <p style="font-size: 1.1rem;">At 10% annual return:</p>
-          <p style="font-size: 1.3rem; font-weight: bold; color: #1b5e20;">₹10,000 → ₹67,275 in 20 years!</p>
+          <p class="amount">₹10,000 → ₹67,275 in 20 years!</p>
           <p style="margin-top: 1rem; font-style: italic;">Your money grows exponentially over time</p>
         </div>
+        
+        <p style="margin-top: 2rem;">The earlier you start investing, the more time compound interest has to work its magic!</p>
       </div>
     </div>
   </div>
 
-  <div class="navigation">
-    <button class="nav-btn" id="prev-btn" onclick="previousSlide()">← Previous</button>
-    <button class="nav-btn" id="next-btn" onclick="nextSlide()">Next →</button>
-  </div>
-
   <script>
-    let currentSlide = 0;
-    const slides = document.querySelectorAll('.slide');
-    const totalSlides = slides.length;
-
-    function showSlide(n) {
-      slides[currentSlide].classList.remove('active');
-      currentSlide = (n + totalSlides) % totalSlides;
-      slides[currentSlide].classList.add('active');
-      
-      // Update progress bar
-      const progress = ((currentSlide + 1) / totalSlides) * 100;
-      document.getElementById('progress-bar').style.width = progress + '%';
-      
-      // Update navigation buttons
-      document.getElementById('prev-btn').disabled = currentSlide === 0;
-      document.getElementById('next-btn').disabled = currentSlide === totalSlides - 1;
-    }
-
-    function nextSlide() {
-      if (currentSlide < totalSlides - 1) {
-        showSlide(currentSlide + 1);
-      }
-    }
-
-    function previousSlide() {
-      if (currentSlide > 0) {
-        showSlide(currentSlide - 1);
-      }
-    }
-
-    function jumpToLesson(lessonNumber) {
-      if (lessonNumber > 0) {
-        showSlide(parseInt(lessonNumber));
-      }
-    }
-
     function goHome() {
       window.location.href = 'index.html';
     }
-
-    // Keyboard navigation
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'ArrowRight' || e.key === ' ') {
-        e.preventDefault();
-        nextSlide();
-      } else if (e.key === 'ArrowLeft') {
-        e.preventDefault();
-        previousSlide();
-      } else if (e.key === 'Escape') {
-        goHome();
-      }
-    });
-
-    // Initialize
-    showSlide(0);
   </script>
 </body>
 </html>
